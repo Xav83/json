@@ -834,10 +834,10 @@ class basic_json
         {
             AllocatorTraits::deallocate(alloc, object, 1);
         };
-        std::unique_ptr<T, decltype(deleter)> object(AllocatorTraits::allocate(alloc, 1), deleter);
-        AllocatorTraits::construct(alloc, object.get(), std::forward<Args>(args)...);
-        assert(object != nullptr);
-        return object.release();
+        std::unique_ptr<T, decltype(deleter)> objectToContruct(AllocatorTraits::allocate(alloc, 1), deleter);
+        AllocatorTraits::construct(alloc, objectToContruct.get(), std::forward<Args>(args)...);
+        assert(objectToContruct != nullptr);
+        return objectToContruct.release();
     }
 
     ////////////////////////
