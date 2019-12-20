@@ -1010,10 +1010,10 @@ class basic_json
             else if (t == value_t::object)
             {
                 stack.reserve(object->size());
-                for (auto&& it : *object)
+                std::transform(std::begin(*object), std::end(*object), std::back_inserter(stack), [](auto&& element)
                 {
-                    stack.push_back(std::move(it.second));
-                }
+                    return std::move(element.second);
+                });
             }
 
             while (not stack.empty())
