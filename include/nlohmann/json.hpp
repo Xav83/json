@@ -1033,11 +1033,10 @@ class basic_json
                 }
                 else if (current_item.is_object())
                 {
-                    for (auto&& it : *current_item.m_value.object)
+                    std::transform(std::begin(*current_item.m_value.object), std::end(*current_item.m_value.object), std::back_inserter(stack), [](auto&& element)
                     {
-                        stack.push_back(std::move(it.second));
-                    }
-
+                        return std::move(element.second);
+                    });
                     current_item.m_value.object->clear();
                 }
 
